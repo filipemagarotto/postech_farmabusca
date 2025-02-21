@@ -1,7 +1,7 @@
 package br.com.postech_farmabusca.commoms.mappers;
 
-import br.com.postech_farmabusca.controller.dto.UserRequestDTO;
-import br.com.postech_farmabusca.controller.dto.UserResponseDTO;
+import br.com.postech_farmabusca.controller.dto.user.UserRequestDTO;
+import br.com.postech_farmabusca.controller.dto.user.UserResponseDTO;
 import br.com.postech_farmabusca.core.domain.User;
 import br.com.postech_farmabusca.resources.entities.UserEntity;
 import org.mapstruct.Mapper;

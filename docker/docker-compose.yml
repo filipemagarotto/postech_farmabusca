@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: farmabusca-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "102030"
+      POSTGRES_DB: farmabusca_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

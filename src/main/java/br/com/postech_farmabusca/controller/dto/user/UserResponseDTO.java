@@ -1,4 +1,4 @@
-package br.com.postech_farmabusca.controller.dto;
+package br.com.postech_farmabusca.controller.dto.user;
 
 import java.time.LocalDateTime;
 
