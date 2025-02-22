@@ -1,5 +1,6 @@
 package br.com.postech_farmabusca.controller;
 
+import br.com.postech_farmabusca.commoms.exception.UnprocessableEntityException;
 import br.com.postech_farmabusca.commoms.mappers.MedicationMapper;
 import br.com.postech_farmabusca.controller.dto.medication.CreateMedicationRequest;
 import br.com.postech_farmabusca.controller.dto.medication.MedicationResponse;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,22 +28,19 @@ public class MedicationController {
     @ResponseStatus(HttpStatus.CREATED)
     public MedicationResponse createMedication(@RequestBody @Valid CreateMedicationRequest request) {
         Medication medication = mapper.toDomain(request);
-
-        return mapper.toResponse(         medicationService.createMedication(medication));
+        return mapper.toResponse(medicationService.createMedication(medication));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MedicationResponse getMedication(@PathVariable Long id) {
-        Medication medication = medicationService.getMedication(id);
-        return mapper.toResponse(medication);
+        return mapper.toResponse(medicationService.getMedication(id));
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<MedicationResponse> getAllMedications() {
-        List<Medication> medications = medicationService.getAllMedications();
-        return medications.stream()
+        return medicationService.getAllMedications().stream()
                 .map(mapper::toResponse)
                 .collect(Collectors.toList());
     }
@@ -49,10 +48,23 @@ public class MedicationController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public MedicationResponse updateMedication(@PathVariable Long id,
-                                               @RequestBody UpdateMedicationRequest request) {
-        Medication updatedData = mapper.toDomain(request);
-        Medication updated = medicationService.updateMedication(id, updatedData);
-        return mapper.toResponse(updated);
+                                               @RequestBody @Valid UpdateMedicationRequest request) {
+        Medication existingMedication = medicationService.getMedication(id);
+
+        // Verifica se outro medicamento já tem o mesmo nome
+        if (request.getName() != null &&
+                !request.getName().equals(existingMedication.getName()) &&
+                medicationService.getAllMedications().stream()
+                        .anyMatch(m -> m.getName().equals(request.getName()))) {
+            throw new UnprocessableEntityException("Já existe um medicamento com esse nome.");
+        }
+
+        Medication updatedData = new Medication();
+        updatedData.setId(existingMedication.getId()); // Mantém o ID
+        updatedData.setName(Optional.ofNullable(request.getName()).orElse(existingMedication.getName()));
+        updatedData.setDescription(Optional.ofNullable(request.getDescription()).orElse(existingMedication.getDescription()));
+
+        return mapper.toResponse(medicationService.updateMedication(id, updatedData));
     }
 
     @DeleteMapping("/{id}")

@@ -1,5 +1,7 @@
 package br.com.postech_farmabusca.core.service;
 
+import br.com.postech_farmabusca.commoms.exception.NotFoundException;
+import br.com.postech_farmabusca.commoms.exception.UnprocessableEntityException;
 import br.com.postech_farmabusca.commoms.mappers.MedicationMapper;
 import br.com.postech_farmabusca.core.domain.Medication;
 import br.com.postech_farmabusca.resources.repository.MedicationRepository;
@@ -15,43 +17,44 @@ import java.util.stream.Collectors;
 public class MedicationService {
 
     private final MedicationRepository medicationRepository;
-    private  final MedicationMapper mapper;
+    private final MedicationMapper mapper;
 
     public Medication createMedication(Medication medication) {
-//Falta regra de negócio
-
+        if (medicationRepository.findByName(medication.getName()).isPresent()) {
+            throw new UnprocessableEntityException("Já existe um medicamento com esse nome.");
+        }
         return mapper.toDomain(medicationRepository.save(mapper.toEntity(medication)));
     }
 
     public Medication getMedication(Long id) {
-        //Falta ajustar
-        return mapper.toDomain(medicationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Medicamento não encontrado")));
+        return medicationRepository.findById(id)
+                .map(mapper::toDomain)
+                .orElseThrow(() -> new NotFoundException("Medicamento não encontrado."));
     }
 
     public List<Medication> getAllMedications() {
         return medicationRepository.findAll().stream()
-                .map(m -> mapper.toDomain(m))
+                .map(mapper::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Transactional
     public Medication updateMedication(Long id, Medication updatedMedication) {
         Medication medication = getMedication(id);
-        //Falta ajustar
+
         if (updatedMedication.getName() != null) {
             medication.setName(updatedMedication.getName());
         }
         if (updatedMedication.getDescription() != null) {
             medication.setDescription(updatedMedication.getDescription());
         }
+
         return mapper.toDomain(medicationRepository.save(mapper.toEntity(medication)));
     }
 
     @Transactional
     public void deleteMedication(Long id) {
         Medication medication = getMedication(id);
-        medicationRepository.delete(mapper.toEntity(medication));
+        medicationRepository.deleteById(medication.getId());
     }
 }
-

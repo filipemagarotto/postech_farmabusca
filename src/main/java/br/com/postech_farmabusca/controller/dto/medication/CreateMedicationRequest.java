@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class CreateMedicationRequest {
-    @NotBlank
+    @NotBlank(message = "O nome do medicamento é obrigatório.")
     private String name;
     private String description;
 }
