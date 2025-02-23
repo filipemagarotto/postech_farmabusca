@@ -42,7 +42,7 @@ public class MedicationService {
     public Medication updateMedication(Long id, Medication updatedMedication) {
         Medication medication = getMedication(id);
 
-        if (updatedMedication.getName() != null) {
+        if (updatedMedication.getName() != null && !updatedMedication.getName().trim().isEmpty()) {
             medication.setName(updatedMedication.getName());
         }
         if (updatedMedication.getDescription() != null) {
