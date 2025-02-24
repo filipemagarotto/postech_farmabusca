@@ -1,4 +1,4 @@
-package br.com.postech_farmabusca.commoms.mappers;
+        package br.com.postech_farmabusca.commoms.mappers;
 
 import br.com.postech_farmabusca.controller.dto.pharmacymedication.CreatePharmacyMedicationRequest;
 import br.com.postech_farmabusca.controller.dto.pharmacymedication.PharmacyMedicationResponse;

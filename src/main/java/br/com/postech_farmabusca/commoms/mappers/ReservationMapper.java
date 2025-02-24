@@ -1,19 +1,23 @@
 package br.com.postech_farmabusca.commoms.mappers;
 
+import br.com.postech_farmabusca.controller.dto.reservation.CreateReservationRequest;
 import br.com.postech_farmabusca.controller.dto.reservation.ReservationResponse;
 import br.com.postech_farmabusca.core.domain.Reservation;
+import br.com.postech_farmabusca.resources.entities.ReservationEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        uses = {PharmacyMapper.class, MedicationMapper.class}
-)
+@Mapper(componentModel = "spring", uses = {MedicationMapper.class, PharmacyMapper.class})
 public interface ReservationMapper {
 
-    @Mapping(source = "medication.id", target = "medicationId")
-    @Mapping(source = "medication.name", target = "medicationName")
-    @Mapping(source = "pharmacy.id", target = "pharmacyId")
-    @Mapping(source = "pharmacy.name", target = "pharmacyName")
-    ReservationResponse toResponse(Reservation reservation);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", constant = "SCHEDULED")
+    @Mapping(target = "reservationTime", expression = "java(java.time.LocalDateTime.now())")
+    Reservation toDomain(CreateReservationRequest request);
+
+    ReservationEntity toEntity(Reservation domain);
+
+    Reservation toDomain(ReservationEntity entity);
+
+    ReservationResponse toResponse(Reservation domain);
 }

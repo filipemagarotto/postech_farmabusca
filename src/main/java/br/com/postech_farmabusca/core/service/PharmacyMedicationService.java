@@ -30,8 +30,8 @@ public class PharmacyMedicationService {
     @Transactional
     public PharmacyMedication createStock(PharmacyMedication stock) {
         boolean exists = repository.findByPharmacyAndMedication(
-                stock.getPharmacy(),
-                stock.getMedication()
+                pharmacyMapper.toEntity(stock.getPharmacy()),
+                medicationMapper.toEntity(stock.getMedication())
         ).isPresent();
 
         if (exists) {

@@ -1,46 +1,70 @@
 package br.com.postech_farmabusca.core.service;
 
-import br.com.postech_farmabusca.core.domain.PharmacyMedication;
+import br.com.postech_farmabusca.commoms.exception.BadRequestException;
+import br.com.postech_farmabusca.commoms.exception.NotFoundException;
+import br.com.postech_farmabusca.commoms.mappers.ReservationMapper;
+import br.com.postech_farmabusca.core.ENUM.ReservationStatus;
 import br.com.postech_farmabusca.core.domain.Reservation;
-import br.com.postech_farmabusca.resources.repository.MedicationRepository;
-import br.com.postech_farmabusca.resources.repository.PharmacyMedicationRepository;
-import br.com.postech_farmabusca.resources.repository.PharmacyRepository;
+import br.com.postech_farmabusca.resources.entities.ReservationEntity;
 import br.com.postech_farmabusca.resources.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationService {
 
-    private final MedicationRepository medicationRepository;
-    private final PharmacyRepository pharmacyRepository;
-    private final PharmacyMedicationRepository pharmacyMedicationRepository;
-    private final ReservationRepository reservationRepository;
+    private final ReservationRepository repository;
+    private final ReservationMapper mapper;
 
-    public List<PharmacyMedication> searchMedicationAvailability(String medicationName) {
-// Falta adicionar regra de negócio
-        throw new UnsupportedOperationException("Método não implementado ainda.");
+    @Transactional
+    public Reservation createReservation(Reservation reservation) {
+        reservation.setStatus(ReservationStatus.SCHEDULED);
+        reservation.setReservationTime(LocalDateTime.now());
+
+        ReservationEntity entity = mapper.toEntity(reservation);
+        ReservationEntity saved = repository.save(entity);
+
+        return mapper.toDomain(saved);
+    }
+
+    public Reservation getReservationById(Long id) {
+        return repository.findById(id)
+                .map(mapper::toDomain)
+                .orElseThrow(() -> new NotFoundException("Reserva não encontrada."));
+    }
+
+    public List<Reservation> getAllReservations() {
+        return repository.findAll().stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public Reservation createReservation(String userId, Long pharmacyId, Long medicationId, int quantity) {
-//Falta implementar regra de negócio
-        throw new UnsupportedOperationException("Método não implementado ainda.");
+    public void expireReservations() {
+        LocalDateTime expirationThreshold = LocalDateTime.now().minusHours(2);
+        List<ReservationEntity> reservationsToExpire = repository
+                .findByStatusAndReservationTimeBefore(ReservationStatus.SCHEDULED, expirationThreshold);
+
+        reservationsToExpire.forEach(reservation -> reservation.setStatus(ReservationStatus.EXPIRED));
+        repository.saveAll(reservationsToExpire);
     }
 
     @Transactional
-    public Reservation confirmPickup(Long reservationId) {
-        // Falta implementar regra confirmacao reserva
-        throw new UnsupportedOperationException("Método não implementado ainda.");
-    }
+    public void cancelReservation(Long id) {
+        ReservationEntity entity = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Reserva não encontrada."));
 
-    @Transactional
-    public Reservation cancelReservation(Long reservationId) {
-        // Falta implementar cancelamento reserva
-        throw new UnsupportedOperationException("Método não implementado ainda.");
+        if (entity.getStatus() != ReservationStatus.SCHEDULED) {
+            throw new BadRequestException("Apenas reservas agendadas podem ser canceladas.");
+        }
+
+        entity.setStatus(ReservationStatus.CANCELED);
+        repository.save(entity);
     }
 }
