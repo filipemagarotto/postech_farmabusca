@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class CreatePharmacyMedicationRequest {
     @NotNull
@@ -14,4 +16,7 @@ public class CreatePharmacyMedicationRequest {
 
     @Min(0)
     private int stock;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

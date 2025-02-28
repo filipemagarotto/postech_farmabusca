@@ -14,5 +14,7 @@ public class Reservation {
     private int quantity;
     private ReservationStatus status;
     private LocalDateTime reservationTime;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
 

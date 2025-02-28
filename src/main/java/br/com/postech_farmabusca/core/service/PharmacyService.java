@@ -41,8 +41,8 @@ public class PharmacyService {
         if (updatedPharmacy.getName() != null) {
             pharmacy.setName(updatedPharmacy.getName());
         }
-        if (updatedPharmacy.getAddress() != null) {
-            pharmacy.setAddress(updatedPharmacy.getAddress());
+        if (updatedPharmacy.getZipCode() != null) {
+            pharmacy.setZipCode(updatedPharmacy.getZipCode());
         }
 
         return mapper.toDomain(pharmacyRepository.save(mapper.toEntity(pharmacy)));

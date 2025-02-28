@@ -17,4 +17,6 @@ public class ReservationResponse {
     private int quantity;
     private String status;
     private LocalDateTime reservationTime;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
