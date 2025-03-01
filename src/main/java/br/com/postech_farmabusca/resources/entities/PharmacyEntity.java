@@ -13,29 +13,24 @@ public class PharmacyEntity {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String street;
 
-    @Column(nullable = false)
     private Integer number;
 
     private String complement;
 
-    @Column(nullable = false)
     private String neighborhood;
 
-    @Column(nullable = false)
     private String city;
 
-    @Column(nullable = false)
     private String state;
 
     @Column(name = "zip_code", nullable = false)
     private Integer zipCode;
 
-    @Column(nullable = false)
     private String country;
 
     @Column(name = "created_at")

@@ -15,7 +15,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String role;
+    private UserType role;
     private String street;
     private Integer number;
     private String complement;

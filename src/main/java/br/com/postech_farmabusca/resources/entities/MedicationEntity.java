@@ -18,6 +18,12 @@ public class MedicationEntity {
 
     private String description;
 
+    // 500mg
+    private String dosage;
+
+    // Comprimid, cápsula
+    private String form;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

@@ -9,6 +9,8 @@ public class MedicationResponse {
     private Long id;
     private String name;
     private String description;
+    private String dosage;
+    private String form;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

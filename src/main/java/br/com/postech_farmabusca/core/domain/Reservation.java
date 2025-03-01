@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class Reservation {
     private Long id;
-    private String userId;
+    private User user;
     private Medication medication;
     private Pharmacy pharmacy;
     private int quantity;

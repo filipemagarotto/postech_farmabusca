@@ -3,6 +3,7 @@ package br.com.postech_farmabusca.controller;
 import br.com.postech_farmabusca.commoms.mappers.ReservationMapper;
 import br.com.postech_farmabusca.controller.dto.reservation.CreateReservationRequest;
 import br.com.postech_farmabusca.controller.dto.reservation.ReservationResponse;
+import br.com.postech_farmabusca.core.domain.PharmacyMedication;
 import br.com.postech_farmabusca.core.domain.Reservation;
 import br.com.postech_farmabusca.core.service.ReservationService;
 import jakarta.validation.Valid;
@@ -24,8 +25,8 @@ public class ReservationController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ReservationResponse createReservation(@RequestBody @Valid CreateReservationRequest request) {
-        Reservation reservation = mapper.toDomain(request);
-        return mapper.toResponse(service.createReservation(reservation));
+        Reservation reservation = service.createReservation(request);
+        return mapper.toResponse(reservation);
     }
 
     @GetMapping("/{id}")
@@ -42,9 +43,30 @@ public class ReservationController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/my")
+    @ResponseStatus(HttpStatus.OK)
+    public List<ReservationResponse> getMyReservations() {
+        return service.getMyReservations().stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/my/{medicationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ReservationResponse getMyReservationByMedication(@PathVariable Long medicationId) {
+        return mapper.toResponse(service.getMyReservationByMedication(medicationId));
+    }
+
+    @PatchMapping("/{id}/pickup")
+    @ResponseStatus(HttpStatus.OK)
+    public ReservationResponse pickUpReservation(@PathVariable Long id) {
+        return mapper.toResponse(service.pickUpReservation(id));
+    }
+
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     public void cancelReservation(@PathVariable Long id) {
         service.cancelReservation(id);
     }
 }
+

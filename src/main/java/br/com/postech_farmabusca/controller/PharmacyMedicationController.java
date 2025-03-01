@@ -25,8 +25,8 @@ public class PharmacyMedicationController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public PharmacyMedicationResponse createStock(@RequestBody @Valid CreatePharmacyMedicationRequest request) {
-        PharmacyMedication stock = mapper.toDomain(request);
-        return mapper.toResponse(service.createStock(stock));
+        PharmacyMedication stock = service.createStock(request);
+        return mapper.toResponse(stock);
     }
 
     @GetMapping("/{id}")
@@ -43,11 +43,38 @@ public class PharmacyMedicationController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PharmacyMedicationResponse updateStock(@PathVariable Long id,
                                                   @RequestBody @Valid UpdatePharmacyMedicationRequest request) {
-        PharmacyMedication updatedStock = mapper.toDomain(request);
-        return mapper.toResponse(service.updateStock(id, updatedStock));
+        PharmacyMedication updatedStock = service.updateStock(id, request);
+        return mapper.toResponse(updatedStock);
+    }
+
+    @GetMapping("/pharmacy/{pharmacyId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PharmacyMedicationResponse> getStockByPharmacy(@PathVariable Long pharmacyId) {
+        return service.getStockByPharmacy(pharmacyId).stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/medication/{medicationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PharmacyMedicationResponse> getStockByMedication(@PathVariable Long medicationId) {
+        return service.getStockByMedication(medicationId).stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/pharmacy/{pharmacyId}/medication/{medicationId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<PharmacyMedicationResponse> getStockByPharmacyAndMedication(
+            @PathVariable Long pharmacyId,
+            @PathVariable Long medicationId) {
+
+        return service.getStockByPharmacyAndMedication(pharmacyId, medicationId).stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
     }
 }

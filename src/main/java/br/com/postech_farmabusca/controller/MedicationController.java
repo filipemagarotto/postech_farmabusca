@@ -51,7 +51,6 @@ public class MedicationController {
                                                @RequestBody @Valid UpdateMedicationRequest request) {
         Medication existingMedication = medicationService.getMedication(id);
 
-        // Verifica se outro medicamento já tem o mesmo nome
         if (request.getName() != null &&
                 !request.getName().equals(existingMedication.getName()) &&
                 medicationService.getAllMedications().stream()
@@ -60,7 +59,7 @@ public class MedicationController {
         }
 
         Medication updatedData = new Medication();
-        updatedData.setId(existingMedication.getId()); // Mantém o ID
+        updatedData.setId(existingMedication.getId());
         updatedData.setName(Optional.ofNullable(request.getName()).orElse(existingMedication.getName()));
         updatedData.setDescription(Optional.ofNullable(request.getDescription()).orElse(existingMedication.getDescription()));
 

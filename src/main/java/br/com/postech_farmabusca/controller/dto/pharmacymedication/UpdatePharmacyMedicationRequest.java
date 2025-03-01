@@ -3,13 +3,8 @@ package br.com.postech_farmabusca.controller.dto.pharmacymedication;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class UpdatePharmacyMedicationRequest {
-    @Min(0)
+    @Min(value = 0, message = "O estoque não pode ser negativo")
     private int stock;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

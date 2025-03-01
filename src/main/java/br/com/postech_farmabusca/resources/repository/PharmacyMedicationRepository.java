@@ -15,13 +15,15 @@ import java.util.Optional;
 public interface PharmacyMedicationRepository extends JpaRepository<PharmacyMedicationEntity, Long> {
 
     Optional<PharmacyMedicationEntity> findByPharmacyAndMedication(PharmacyEntity pharmacy, MedicationEntity medication);
-
     @Query("SELECT pm FROM PharmacyMedicationEntity pm " +
-            "WHERE pm.medication.name = :medicationName " +
+            "WHERE LOWER(pm.medication.name) LIKE LOWER(CONCAT('%', :medicationName, '%')) " +
             "AND pm.stock > 0 " +
-            "ORDER BY ABS(pm.pharmacy.zipCode - :zipCode)")
+            "ORDER BY pm.pharmacy.zipCode - :zipCode ASC")
     List<PharmacyMedicationEntity> findByMedicationNameAndNearestZip(
             @Param("medicationName") String medicationName,
             @Param("zipCode") Integer zipCode);
 
+    List<PharmacyMedicationEntity> findByPharmacy(PharmacyEntity pharmacy);
+
+    List<PharmacyMedicationEntity> findByMedication(MedicationEntity medication);
 }

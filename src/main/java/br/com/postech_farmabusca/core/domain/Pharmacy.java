@@ -1,19 +1,16 @@
 package br.com.postech_farmabusca.core.domain;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pharmacy {
-    private  Long id;
+    private Long id;
     private String name;
     private String street;
     private Integer number;
@@ -25,4 +22,9 @@ public class Pharmacy {
     private String country;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public Pharmacy(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }
