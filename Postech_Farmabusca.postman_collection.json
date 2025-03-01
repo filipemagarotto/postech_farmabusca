@@ -1,0 +1,498 @@
+{
+	"info": {
+		"_postman_id": "cbeea483-9175-4c0a-b486-b2df9f7cc021",
+		"name": "Postech_Farmabusca",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39097434"
+	},
+	"item": [
+		{
+			"name": "Usuário",
+			"item": [
+				{
+					"name": "Autenticação",
+					"item": [
+						{
+							"name": "Criar um usuário",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"securepassword123\",\r\n    \"role\": \"USER\",\r\n    \"name\": \"John Doe\",\r\n    \"street\": \"123 Main Street\",\r\n    \"number\": 45,\r\n    \"complement\": \"Apartment 2A\",\r\n    \"neighborhood\": \"Downtown\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"zipCode\": 10001,\r\n    \"country\": \"USA\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"user@example.com\",\r\n    \"password\":\"securepassword123\",\r\n    \"keepLoggedIn\":true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Medicamento",
+			"item": [
+				{
+					"name": "Criar medicamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"ibuprofeno\",\r\n    \"description\":\"qlqr coisa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/medications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"medications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar medicamento pelo Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos medicamentos",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar medicamento",
+					"request": {
+						"method": "PATCH",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Medicamento",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Farmácia",
+			"item": [
+				{
+					"name": "Criar farmácia",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"farm test\",\r\n    \"zipCode\":10001,\r\n    \"number\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/pharmacies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pharmacies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar farmácia pelo Id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todas farmácias",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar farmácia",
+					"request": {
+						"method": "PATCH",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar farmácia",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/pharmacies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pharmacies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stock",
+			"item": [
+				{
+					"name": "Criar estoque",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pharmacyId\":1,\r\n    \"medicationId\":1,\r\n    \"stock\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/stocks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stocks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar estoque pelo id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todos estoques",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar estoque pela farmácia",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar estoques pelo medicamento",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar estoque pela farmácia e medicamento",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar estoque",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stock\":5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/stocks/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stocks",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Search",
+			"item": [
+				{
+					"name": "Buscar farmácias pelo nome do medicamento e CEP",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar farmácias apenas pelo nome do medicamento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/search?medicationName=teste",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "medicationName",
+									"value": "teste"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reserva",
+			"item": [
+				{
+					"name": "Criar uma reserva",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MjkyNjh9.pXvbZJRK_VxaOa6SjT67iH7GH5PQsf9NcCi6fUsCLus",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicationId\":1,\r\n    \"pharmacyId\":1,\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar reserva pelo id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar todas reservas",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar pelas minhas reservas",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar minhas reservas por medicamento",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Cancelar reserva",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Retirar o remédio",
+					"request": {
+						"method": "PATCH",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
