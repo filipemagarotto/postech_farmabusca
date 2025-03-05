@@ -6,6 +6,7 @@ import br.com.postech_farmabusca.core.domain.User;
 import br.com.postech_farmabusca.resources.entities.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import static br.com.postech_farmabusca.commoms.mappers.utils.MappingUtils.LOCAL_DATE_TIME_NOW;
 
@@ -26,4 +27,7 @@ public interface UserMapper {
     @Mapping(target = "createdAt", defaultExpression = LOCAL_DATE_TIME_NOW)
     @Mapping(target = "updatedAt", defaultExpression = LOCAL_DATE_TIME_NOW)
     UserEntity toEntity(User domain);
+
+    @Mapping(target = "id", ignore = true)
+    void updateUserFromRequest(UserRequestDTO request, @MappingTarget UserEntity user);
 }

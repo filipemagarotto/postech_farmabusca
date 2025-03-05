@@ -71,6 +71,54 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Atualizar usuário",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE3NzQ1Nzh9.PeNuxJYMl50HurH33a6hM_yICOF-ztmgC2h9oEQWJjc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"João da Silva\",\r\n    \"email\": \"joao.novo@email.com\",\r\n    \"password\": \"novaSenha123\",\r\n    \"street\": \"Rua Exemplo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
