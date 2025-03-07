@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:17
+    image: postgres:latest
     container_name: farmabusca-postgres
     environment:
       POSTGRES_USER: postgres
@@ -9,7 +9,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - volume_name:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
+  volume_name: # <- Rename "volume_name"
+    name:
+      volume_name
