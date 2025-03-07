@@ -1,10 +1,8 @@
 package br.com.postech_farmabusca.controller;
 
 import br.com.postech_farmabusca.commoms.exception.EmailAlreadyExistsException;
-import br.com.postech_farmabusca.commoms.exception.ForbiddenException;
 import br.com.postech_farmabusca.commoms.exception.InvalidCredentialsException;
 import br.com.postech_farmabusca.commoms.exception.UnauthorizedException;
-import br.com.postech_farmabusca.core.domain.UserType;
 import br.com.postech_farmabusca.resources.entities.UserEntity;
 import br.com.postech_farmabusca.resources.repository.UserRepository;
 import br.com.postech_farmabusca.security.TokenService;
@@ -18,7 +16,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
@@ -35,13 +37,15 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public UserResponse login(@RequestBody @Valid UserAuthRequest data){
+    public UserResponse login(@RequestBody @Valid UserAuthRequest data) {
         try {
-            var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            var usernamePassword = new UsernamePasswordAuthenticationToken(
+                    data.email(), data.password());
 
             var auth = this.authenticationManager.authenticate(usernamePassword);
 
-            var token = tokenService.generateToken((UserEntity) auth.getPrincipal(), data.keepLoggedIn());
+            var token = tokenService.generateToken(
+                    (UserEntity) auth.getPrincipal(), data.keepLoggedIn());
 
             return new UserResponse(token);
         } catch (Exception e) {
@@ -59,15 +63,15 @@ public class AuthenticationController {
         if (auth == null || !auth.isAuthenticated()) {
             throw new UnauthorizedException("Usuário não autenticado.");
         }
-
-        if (data.role() == UserType.ADMIN) {
-            boolean isAdmin = auth.getAuthorities().stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
-
-            if (!isAdmin) {
-                throw new ForbiddenException("Somente administradores podem criar usuários com role ADMIN.");
-            }
-        }
+//        TODO Ativar essa validação para apenas ADMIN poderem criar um outro usuário ADMIN
+//        if (data.role() == UserType.ADMIN) {
+//            boolean isAdmin = auth.getAuthorities().stream()
+//                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+//
+//            if (!isAdmin) {
+//                throw new ForbiddenException("Somente administradores podem criar usuários com role ADMIN.");
+//            }
+//        }
 
         if (this.repository.findByEmail(data.email()).isPresent()) {
             throw new EmailAlreadyExistsException("O email já está em uso.");
@@ -86,9 +90,11 @@ public class AuthenticationController {
                 data.city(),
                 data.state(),
                 data.zipCode(),
-                data.country());
+                data.country()
+        );
         this.repository.save(newUser);
     }
+
 }
 
 

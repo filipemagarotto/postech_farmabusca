@@ -25,7 +25,7 @@ public class ControllerExceptionHandler {
     private static final StandardError err = new StandardError();
 
     @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public StandardError entityNotFound(
             NotFoundException e,

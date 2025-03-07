@@ -2,12 +2,11 @@ package br.com.postech_farmabusca.core.service;
 
 import br.com.postech_farmabusca.commoms.exception.ForbiddenException;
 import br.com.postech_farmabusca.commoms.exception.NotFoundException;
-import br.com.postech_farmabusca.commoms.exception.UnprocessableEntityException;
 import br.com.postech_farmabusca.commoms.mappers.MedicationMapper;
 import br.com.postech_farmabusca.core.domain.Medication;
 import br.com.postech_farmabusca.core.domain.User;
 import br.com.postech_farmabusca.core.domain.UserType;
-import br.com.postech_farmabusca.resources.entities.UserEntity;
+import br.com.postech_farmabusca.resources.entities.MedicationEntity;
 import br.com.postech_farmabusca.resources.repository.MedicationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 public class MedicationService {
 
     private final MedicationRepository medicationRepository;
+
     private final MedicationMapper mapper;
 
     @Transactional
@@ -48,7 +48,8 @@ public class MedicationService {
     public Medication updateMedication(Long id, Medication updatedMedication) {
         ensureAdminAccess();
 
-        Medication medication = getMedication(id);
+        MedicationEntity medication = medicationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Medicamento não encontrado."));
 
         if (updatedMedication.getName() != null && !updatedMedication.getName().trim().isEmpty()) {
             medication.setName(updatedMedication.getName());
@@ -63,7 +64,7 @@ public class MedicationService {
             medication.setForm(updatedMedication.getForm());
         }
 
-        return mapper.toDomain(medicationRepository.save(mapper.toEntity(medication)));
+        return mapper.toDomain(medicationRepository.save(medication));
     }
 
     @Transactional
@@ -77,7 +78,8 @@ public class MedicationService {
     private void ensureAdminAccess() {
         User user = getAuthenticatedUser();
         if (!user.getRole().equals(UserType.ADMIN)) {
-            throw new ForbiddenException("Acesso negado: Apenas administradores podem executar esta ação.");
+            throw new ForbiddenException(
+                    "Acesso negado: Apenas administradores podem executar esta ação.");
         }
     }
 
@@ -85,9 +87,11 @@ public class MedicationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new ForbiddenException("Usuário não autenticado. Faça login como ADMIN para continuar.");
+            throw new ForbiddenException(
+                    "Usuário não autenticado. Faça login como ADMIN para continuar.");
         }
 
         return (User) authentication.getPrincipal();
     }
+
 }

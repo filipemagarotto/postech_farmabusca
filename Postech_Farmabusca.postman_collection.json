@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "cbeea483-9175-4c0a-b486-b2df9f7cc021",
+		"_postman_id": "fc9a08d0-ebe6-4d6a-b168-3ae94a176266",
 		"name": "Postech_Farmabusca",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "39097434"
+		"_exporter_id": "39578421"
 	},
 	"item": [
 		{
@@ -19,7 +19,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"securepassword123\",\r\n    \"role\": \"USER\",\r\n    \"name\": \"John Doe\",\r\n    \"street\": \"123 Main Street\",\r\n    \"number\": 45,\r\n    \"complement\": \"Apartment 2A\",\r\n    \"neighborhood\": \"Downtown\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"zipCode\": 10001,\r\n    \"country\": \"USA\"\r\n}\r\n",
+									"raw": "{\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"securepassword123\",\r\n    \"role\": \"ADMIN\",\r\n    \"name\": \"John Doe\",\r\n    \"street\": \"123 Main Street\",\r\n    \"number\": 45,\r\n    \"complement\": \"Apartment 2A\",\r\n    \"neighborhood\": \"Downtown\",\r\n    \"city\": \"New York\",\r\n    \"state\": \"NY\",\r\n    \"zipCode\": 10001,\r\n    \"country\": \"USA\"\r\n}\r\n",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -48,7 +48,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\":\"user@example.com\",\r\n    \"password\":\"securepassword123\",\r\n    \"keepLoggedIn\":true\r\n}",
+									"raw": "{\r\n    \"email\":\"user1@example.com\",\r\n    \"password\":\"securepassword123\",\r\n    \"keepLoggedIn\":true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -80,7 +80,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE3NzQ1Nzh9.PeNuxJYMl50HurH33a6hM_yICOF-ztmgC2h9oEQWJjc",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE5NzUxNjR9.JAHE1e5okVwKGpJqzoGIOq8esKaSqj9PvXynDAnDObE",
 									"type": "string"
 								}
 							]
@@ -111,14 +111,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
 				}
 			]
 		},
@@ -133,7 +125,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -142,7 +134,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"ibuprofeno\",\r\n    \"description\":\"qlqr coisa\"\r\n}",
+							"raw": "{\r\n    \"name\":\"ibuprofeno\",\r\n    \"description\": \"ibuprofeno 250 mg\",\r\n    \"dosage\": \"250 mg\",\r\n    \"form\": \"Fórmula\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -167,32 +159,132 @@
 				{
 					"name": "Buscar medicamento pelo Id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/medications/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"medications",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar todos medicamentos",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/medications",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"medications"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Atualizar medicamento",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\":\"ibuprofeno\",\n    \"description\": \"ibuprofeno 500 mg\",\n    \"dosage\": \"500 mg\",\n    \"form\": \"Fórmula\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/medications/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"medications",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Deletar Medicamento",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/medications/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"medications",
+								"1"
+							]
+						}
 					},
 					"response": []
 				}
@@ -209,7 +301,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -243,30 +335,117 @@
 				{
 					"name": "Buscar farmácia pelo Id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/pharmacies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pharmacies",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar todas farmácias",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/pharmacies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pharmacies"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Atualizar farmácia",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"name\": \"farm test update\",\n    \"street\": null,\n    \"number\": 15,\n    \"complement\": null,\n    \"neighborhood\": null,\n    \"city\": null,\n    \"state\": null,\n    \"zipCode\": 10001,\n    \"country\": null\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/pharmacies/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pharmacies",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Deletar farmácia",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -298,7 +477,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -307,7 +486,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"pharmacyId\":1,\r\n    \"medicationId\":1,\r\n    \"stock\": 10\r\n}",
+							"raw": "{\r\n    \"pharmacyId\":2,\r\n    \"medicationId\":2,\r\n    \"stock\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -332,40 +511,159 @@
 				{
 					"name": "Buscar estoque pelo id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/stocks/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stocks",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar todos estoques",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/stocks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stocks"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar estoque pela farmácia",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/stocks/pharmacy/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stocks",
+								"pharmacy",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar estoques pelo medicamento",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/stocks/medication/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stocks",
+								"medication",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar estoque pela farmácia e medicamento",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/stocks/pharmacy/2/medication/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"stocks",
+								"pharmacy",
+								"2",
+								"medication",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -377,7 +675,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDE0MTc2MTh9.sHjI8bwCiYKAtuFQd5p_G3iGtGhrMJroFF22O-O7hpo",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -394,7 +692,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/stocks/3",
+							"raw": "http://localhost:8080/api/stocks/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -403,7 +701,7 @@
 							"path": [
 								"api",
 								"stocks",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -417,18 +715,20 @@
 				{
 					"name": "Buscar farmácias pelo nome do medicamento e CEP",
 					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar farmácias apenas pelo nome do medicamento",
-					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/search?medicationName=teste",
+							"raw": "http://localhost:8080/api/search?medicationName=ibuprofeno&zipCode=10001",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -441,7 +741,47 @@
 							"query": [
 								{
 									"key": "medicationName",
-									"value": "teste"
+									"value": "ibuprofeno"
+								},
+								{
+									"key": "zipCode",
+									"value": "10001"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar farmácias apenas pelo nome do medicamento",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/search?medicationName=ibuprofeno",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "medicationName",
+									"value": "ibuprofeno"
 								}
 							]
 						}
@@ -470,7 +810,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"medicationId\":1,\r\n    \"pharmacyId\":1,\r\n    \"quantity\":2\r\n}",
+							"raw": "{\r\n    \"medicationId\":2,\r\n    \"pharmacyId\":2,\r\n    \"quantity\":2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -495,24 +835,61 @@
 				{
 					"name": "Buscar reserva pelo id",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/reservations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservations",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Buscar todas reservas",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "Buscar pelas minhas reservas",
-					"request": {
-						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservations"
+							]
+						}
 					},
 					"response": []
 				},
@@ -520,23 +897,73 @@
 					"name": "Buscar minhas reservas por medicamento",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Cancelar reserva",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/reservations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservations",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Retirar o remédio",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PATCH",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/reservations/2/pickup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"reservations",
+								"2",
+								"pickup"
+							]
+						}
 					},
 					"response": []
 				}
